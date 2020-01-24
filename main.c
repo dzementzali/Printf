@@ -1,7 +1,6 @@
 #include "ft_printf.h"
 
-#define TEST "[%5%]\n"
-
+#define TEST "[%10.5i]\n"
 int main()
 {
 
@@ -12,18 +11,16 @@ int main()
 	int e;
 	unsigned int u;
 
-	d = 51516141;
+	d = -5155580;
 	u = 1089855;
 	c = 'f';
 	e = 100;
-	str = "coucou";
-	str1 = "hello";
-
+	str = "yolo00";
+	str1 = "world";
 	printf("=======MINE======\n");
 	fflush(stdout);
-	ft_printf(TEST);
+	printf("result -> %d\n", ft_printf(TEST, -946));
 	printf("=======VRAI======\n");
-	printf(TEST);
+	printf("result -> %d\n", printf(TEST, -946));
 	return (0);
 }
-

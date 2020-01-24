@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 14:36:50 by dzementz          #+#    #+#             */
-/*   Updated: 2019/10/22 23:12:32 by dzementz         ###   ########.fr       */
+/*   Created: 2019/10/08 14:37:40 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/22 20:13:35 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	int			i;
-	char		*d;
-	const char	*s;
+	size_t	i;
+	char	*strs;
 
-	d = (char*)dst;
-	s = (const char*)src;
-	i = -1;
-	if (!dst && !src)
-		return (NULL);
-	if (len == 0)
-		return (d);
-	if (d < s)
+	strs = (char *)str;
+	i = 0;
+	while (i < n)
 	{
-		while (++i < (int)len)
-			d[i] = s[i];
+		strs[i] = c;
+		i++;
 	}
-	else
-	{
-		while (++i < (int)len)
-			d[(len - 1) - i] = s[(len - 1) - i];
-	}
-	return (dst);
+	return (strs);
 }

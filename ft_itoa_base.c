@@ -1,46 +1,62 @@
 #include "ft_printf.h"
 
-static int		conv_ex(int nb)
+int		ft_len(long nb, int len_base)
 {
-	if (nb >= 10)
-		return (nb - 10 + 'a');
-	else
-		return (nb + '0');
-}
+	int count;
 
-static int		conv_ex_maj(int nb)
-{
-	if (nb >= 10)
-		return (nb - 10 + 'A');
-	else
-		return (nb + '0');
-}
-
-char	*ft_itoa_base(long long int value, int base, int maj)
-{
-	int					i;
-	char				*str;
-	long long int				tmp;
-	
-	i = 0;
-	tmp = value;
-	while (tmp >= base)
+	count = 0;
+	while (nb)
 	{
-		tmp = tmp / base;
-		i++;
-	}	
-	if (!(str = (char *)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	str[i + 1] = '\0';
-	while (i >= 0)
-	{
-		tmp = value % base;
-		if (maj == 1)
-		str[i] = conv_ex_maj(tmp);
-		else 
-		str[i] = conv_ex(tmp);
-		value /= base;
-		i--;
+		nb = nb / len_base;
+		count++;
 	}
-	return (str);
+	return (count);
 }
+
+char	*ft_divmod(long nb, char *base, int len_base)
+{
+	char	*res;
+	int		len;
+	int		mod;
+
+	len = ft_len(nb, len_base);
+	if (!(res = malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	res[len] = 0;
+	len--;
+	mod = 0;
+	while (nb)
+	{
+		mod = nb % len_base;
+		res[len] = base[mod];
+		nb = nb / len_base;
+		len--;
+	}
+	return (res);
+}
+
+char	*ft_nbzer(char *base)
+{
+	char *res;
+
+	if (!(res = malloc(sizeof(char) * 2)))
+		return (NULL);
+	res[0] = base[0];
+	res[1] = 0;
+	return (res);
+}
+
+char	*ft_itoa_base(long nb, char *base)
+{
+	int		len_base;
+
+	len_base = ft_strlen(base);
+	if (nb == 0)
+		return (ft_nbzer(base));
+	if (base == NULL)
+		return (NULL);
+	if (nb < 0)
+		ft_itoa_base(-nb, base);
+	return (ft_divmod(nb, base, len_base));
+}
+

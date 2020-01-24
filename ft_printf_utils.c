@@ -4,73 +4,47 @@
 
 void init_struc(t_prtf *structure)
 {
-	structure->flag = 0;
+	structure->conv = 0;
 	structure->star = 0;
 	structure->zero = 0;
 	structure->minus = 0;
 	structure->width = 0;
 	structure->precision = 0;
 	structure->precisionfound = 0;
-	structure->len = 0;
 	structure->line = NULL;
 }
-//============================== Applications modificateurs ==============================
+//============================== Applications conv ==============================
 
-void apply_mod(t_prtf *structprtf, va_list *list_printf)
+void apply_conv(t_prtf *structprtf, va_list *list_printf)
 {
-	if (structprtf->flag == 'c' || structprtf->flag == 's' || structprtf->flag == 'p')
-	{
-		apply_scp(structprtf, list_printf);
-	}
-	if (structprtf->flag == 'd' || structprtf->flag == 'i' || structprtf->flag == 'u')
-	{
-		apply_diu(structprtf, list_printf);
-	}
-	if (structprtf->flag == 'x' || structprtf->flag == 'X')
-	{
-		apply_xX(structprtf, list_printf);
-	}
-	if (structprtf->flag == '%')
-	{
-		apply_percent(structprtf);
-	}
-}
-
-void apply_scp(t_prtf *structprtf, va_list *list_printf)
-{
-	if (structprtf->flag == 's')
+	if (structprtf->conv == 's')
 		myprintf_s(list_printf, structprtf);
 
-	if (structprtf->flag == 'c')
+	else if (structprtf->conv == 'c')
 		myprintf_c(list_printf, structprtf);
 
-	if (structprtf->flag == 'p')
+	else if (structprtf->conv == 'p')
 		myprintf_p(list_printf, structprtf);
-}
 
-void apply_diu(t_prtf *structprtf, va_list *list_printf)
-{
-	if (structprtf->flag == 'd' || structprtf->flag == 'i')
+	if (structprtf->conv == 'd' || structprtf->conv == 'i')
 		myprintf_di(list_printf, structprtf);
-	if (structprtf->flag == 'u')
+
+	if (structprtf->conv == 'u')
 		myprintf_u(list_printf, structprtf);
-}
 
-void apply_xX(t_prtf *structprtf, va_list *list_printf)
-{
-	if (structprtf->flag == 'x')
+	if (structprtf->conv == 'X' || structprtf->conv == 'x')
 		myprintf_x(list_printf, structprtf);
-	if (structprtf->flag == 'X')
-		myprintf_X(list_printf, structprtf);
-}
 
+	else if (structprtf->conv == '%')
+		myprint_percent('%', structprtf);
+}
 //============================== Recuperation nombres ==============================
 
 int recup_number(char *str, int *i, t_prtf *structprtf)
 {
 	int beg;
 
-	while (str[*i] != structprtf->flag && ft_isdigit(str[*i]) != 1)
+	while (str[*i] != structprtf->conv && ft_isdigit(str[*i]) != 1)
 		*i = *i + 1;
 	beg = *i;
 	while (ft_isdigit(str[*i]))
@@ -81,19 +55,19 @@ int recup_number(char *str, int *i, t_prtf *structprtf)
 }
 //============================== Remplis struct ==============================
 
-void check_mod(char *str, t_prtf *structprtf, va_list list_printf)
+void check_flag(char *str, t_prtf *structprtf, va_list list_printf)
 {
 	int i;
 
 	i = structprtf->percent;
-	while (str[i] != structprtf->flag)
+	while (str[i] != structprtf->conv)
 	{
-		if (str[i] == '-' && structprtf->precision == 0)
+		while (str[i] == '-')
 		{
 			structprtf->minus = 1;
 			i++;
 		}
-		if (str[i] == '0')
+		while (str[i] == '0')
 		{
 			structprtf->zero = 1;
 			i++;
@@ -101,8 +75,15 @@ void check_mod(char *str, t_prtf *structprtf, va_list list_printf)
 		if (str[i] == '*' && structprtf->precisionfound == 0)
 		{
 			structprtf->star = 1;
-			structprtf->width = va_arg(list_printf, int);
-			i++;
+			structprtf->width = (va_arg(list_printf, int));
+			if (structprtf->width < 0)
+			{
+				structprtf->minus = 1;
+				structprtf->width = structprtf->width * -1;
+			}
+			else
+			structprtf->width = structprtf->width;
+				 i++;
 		}
 		if (ft_isdigit(str[i]) == 1 && str[i] != '0' && structprtf->precisionfound == 0)
 		{
@@ -118,7 +99,7 @@ void check_mod(char *str, t_prtf *structprtf, va_list list_printf)
 				structprtf->precision = va_arg(list_printf, int);
 				i = i + 2;
 			}
-			if (ft_isdigit(str[i + 1]) == 1)
+			if (ft_isdigit(str[i + 1]) == 1 && str[i] != structprtf->conv)
 			{
 				structprtf->precision = recup_number(str, &i, structprtf);
 				i++;
@@ -132,7 +113,7 @@ void check_mod(char *str, t_prtf *structprtf, va_list list_printf)
 }
 //============================== Verif presence "idsuxXetc.." ==============================
 
-int check_flag(char *str, int *i)
+int check_conv(char *str, int *i)
 {
 	while (str[*i])
 	{
@@ -141,4 +122,21 @@ int check_flag(char *str, int *i)
 		*i = *i + 1;
 	}
 	return (0);
+}
+//============================== Incrementation len ==============================
+void incr_len(t_prtf *structprtf, int nb)
+{
+	while (nb > 0)
+	{
+		structprtf->len++;
+		nb--;
+	}
+}
+
+//============================Putchar===========================================
+
+void	ft_putprint(char c, t_prtf *structprtf)
+{
+	write(1, &c, 1);
+	structprtf->len++;	
 }

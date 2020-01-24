@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 11:22:40 by dzementz          #+#    #+#             */
-/*   Updated: 2019/10/18 18:02:15 by dzementz         ###   ########.fr       */
+/*   Created: 2019/10/09 13:03:08 by dzementz          #+#    #+#             */
+/*   Updated: 2019/10/21 15:43:21 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strdup(const char *str)
 {
 	int		i;
-	char	*str;
+	char	*s;
 
+	if (!(s = (char*)malloc(sizeof(char) * ft_strlen(str) + 1)))
+		return (0);
 	i = 0;
-	if (!s || !f)
-		return (NULL);
-	if (!(str = (char *)malloc(sizeof(char) * ft_strlen(s) + 1)))
-		return (NULL);
-	while (s[i])
+	while (str[i])
 	{
-		str[i] = f(i, s[i]);
+		s[i] = str[i];
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	s[i] = '\0';
+	return (s);
 }

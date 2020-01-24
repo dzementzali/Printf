@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/20 17:37:54 by dzementz          #+#    #+#             */
-/*   Updated: 2019/10/20 17:37:56 by dzementz         ###   ########.fr       */
+/*   Created: 2019/10/08 14:38:43 by dzementz          #+#    #+#             */
+/*   Updated: 2019/10/19 13:31:49 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+int	ft_strlen(const char *str)
 {
-	new->next = *alst;
-	*alst = new;
+	int i;
+
+	if (!*str)
+		return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

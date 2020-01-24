@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 14:35:14 by dzementz          #+#    #+#             */
-/*   Updated: 2019/10/21 17:10:58 by dzementz         ###   ########.fr       */
+/*   Created: 2019/10/08 14:33:04 by dzementz          #+#    #+#             */
+/*   Updated: 2019/10/14 15:45:02 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_memchr(const void *str, int c, size_t n)
+int	ft_atoi(const char *str)
 {
-	size_t	i;
-	char	*s;
-	char	d;
+	int i;
+	int neg;
+	int result;
 
 	i = 0;
-	s = (char *)str;
-	d = (char)c;
-	while (i < n)
+	neg = 1;
+	result = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\v' ||
+			str[i] == '\n' || str[i] == '\r' || str[i] == '\f')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (s[i] == d)
-			return (s + i);
+		if (str[i] == '-')
+			neg = neg * -1;
 		i++;
 	}
-	return (NULL);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + str[i] - 48;
+		i++;
+	}
+	return (result * neg);
 }

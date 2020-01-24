@@ -3,15 +3,13 @@
 int ft_printf(char *str, ...)
 {
 	int i;
-	int ret;
-
 	va_list list_printf;
 	t_prtf structprtf;
 	va_start(list_printf, str);
 
 	structprtf.percent = 0;
+	structprtf.len = 0;
 	i = 0;
-	ret = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
@@ -19,27 +17,27 @@ int ft_printf(char *str, ...)
 			i++;
 			init_struc(&structprtf);
 			structprtf.percent = i;
-			if (check_flag(str, &i) == 0)
+			if (check_conv(str, &i) == 0)
 			{
 				printf("No flag");
-				return (0);
+				return(0);
 			}
 			else
 			{
-				structprtf.flag = str[i];
-				check_mod(str, &structprtf, list_printf);
-				//print_struct(structprtf);
-				apply_mod(&structprtf, &list_printf);
+				structprtf.conv = str[i];
+				check_flag(str, &structprtf, list_printf);
+				apply_conv(&structprtf, &list_printf);
 			}
 			i++;
 		}
 		else
 		{
 			write(1, &str[i], 1);
+			structprtf.len++;
 			i++;
-			ret++;
 		}
 	}
 	va_end(list_printf);
-	return (ret + structprtf.len);
+	//print_struct(structprtf);
+	return (structprtf.len);
 }
