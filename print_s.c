@@ -1,16 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_s.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/25 21:25:02 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/25 21:25:03 by dzementz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-//|========================String================|
-void ft_normal_s(char *str, t_prtf *structprtf, char c)
+void	ft_normal_s(char *str, t_prtf *structprtf, char c)
 {
 	int i;
 	int len;
 
 	len = 0;
 	i = 0;
-	if (structprtf->precisionfound && (structprtf->precision > ft_strlen(str) || structprtf->precision < 0))
+	if (structprtf->precisionfound && (structprtf->precision > ft_strlen(str)
+	|| structprtf->precision < 0))
 		len = ft_strlen(str);
-	else if (structprtf->precisionfound && !structprtf->precision && structprtf->width)
+	else if (structprtf->precisionfound &&
+	!structprtf->precision && structprtf->width)
 		len = 0;
 	else if (structprtf->precisionfound)
 		len = structprtf->precision;
@@ -24,7 +37,8 @@ void ft_normal_s(char *str, t_prtf *structprtf, char c)
 		i++;
 	}
 }
-void ft_minus_s(char *str, t_prtf *structprtf, char c)
+
+void	ft_minus_s(char *str, t_prtf *structprtf, char c)
 {
 	int i;
 	int len;
@@ -32,9 +46,11 @@ void ft_minus_s(char *str, t_prtf *structprtf, char c)
 	len = 0;
 	i = 0;
 	structprtf->zero = 0;
-	if (structprtf->precisionfound && (structprtf->precision > ft_strlen(str) || structprtf->precision < 0))
+	if (structprtf->precisionfound &&
+	(structprtf->precision > ft_strlen(str) || structprtf->precision < 0))
 		len = ft_strlen(str);
-	else if (structprtf->precisionfound && !structprtf->precision && structprtf->width)
+	else if (structprtf->precisionfound && !structprtf->precision
+		&& structprtf->width)
 		len = 0;
 	else if (structprtf->precisionfound && structprtf->precision > 0)
 		len = structprtf->precision;
@@ -48,13 +64,15 @@ void ft_minus_s(char *str, t_prtf *structprtf, char c)
 	while (structprtf->width-- > len)
 		ft_putprint(c, structprtf);
 }
-void ft_nullstring(t_prtf *structprtf, char c)
+
+void	ft_nullstring(t_prtf *structprtf, char c)
 {
-	char *nul;
-	int len;
+	char	*nul;
+	int		len;
 
 	len = 6;
-	if (structprtf->precisionfound && (structprtf->precision >= 0 && structprtf->precision < 6))
+	if (structprtf->precisionfound && (structprtf->precision >= 0 &&
+		structprtf->precision < 6))
 		len = structprtf->precision;
 	nul = ft_substr("(null)", 0, len);
 	if ((structprtf->precision < 0) && !structprtf->width)
@@ -65,7 +83,8 @@ void ft_nullstring(t_prtf *structprtf, char c)
 		ft_normal_s(nul, structprtf, c);
 	free(nul);
 }
-void myprintf_s(va_list *list_printf, t_prtf *structprtf)
+
+void	myprintf_s(va_list *list_printf, t_prtf *structprtf)
 {
 	char *str;
 	char c;
@@ -77,7 +96,7 @@ void myprintf_s(va_list *list_printf, t_prtf *structprtf)
 	if (str == NULL)
 		ft_nullstring(structprtf, c);
 	if (str == NULL || (!*str && !structprtf->width))
-		return;
+		return ;
 	if (structprtf->precision < 0)
 		structprtf->precision = ft_strlen(str);
 	if (!*str)
@@ -86,7 +105,7 @@ void myprintf_s(va_list *list_printf, t_prtf *structprtf)
 			ft_putprint(c, structprtf);
 	}
 	if (!*str)
-		return;
+		return ;
 	if (structprtf->minus)
 		ft_minus_s(str, structprtf, c);
 	else

@@ -2,8 +2,11 @@ NAME = libftprintf.a
 
 FLAGS = -Wall -Wextra -Werror -g3
 
-SRCS =	ft_itoa_base.c \
+SRCS =  ft_itoa_base.c \
 		ft_printf_utils.c \
+		ft_check_flag_star.c \
+		ft_check_flag_precision.c \
+		ft_check_flag_mod.c \
 		ft_printf.c \
 		print_di.c \
 		print_u.c \

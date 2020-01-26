@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_check_flag_mod.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/25 16:50:53 by dzementz          #+#    #+#             */
-/*   Updated: 2020/01/25 16:50:55 by dzementz         ###   ########.fr       */
+/*   Created: 2020/01/26 01:01:20 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/26 01:01:23 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putstr(char *str, t_prtf *structprtf)
+void	check_flag_mod(int *i, t_prtf *structprtf, char mz)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
+	if (mz == 'm')
 	{
-		ft_putprint(str[i], structprtf);
-		i++;
+		structprtf->minus = 1;
+		*i = *i + 1;
+	}
+	else
+	{
+		structprtf->zero = 1;
+		*i = *i + 1;
 	}
 }

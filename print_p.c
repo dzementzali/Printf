@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_p.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/25 21:20:10 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/25 21:20:14 by dzementz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-//|========================Pointeur================|
 void	ft_width_precision_p(char *str, t_prtf *structprtf, char wp, char c)
 {
-	int		len;
+	int	len;
 
 	len = ft_strlen(str) + 2;
 	if (structprtf->precision > len && structprtf->precisionfound)
@@ -27,13 +38,15 @@ void	ft_width_precision_p(char *str, t_prtf *structprtf, char wp, char c)
 		}
 	}
 }
+
 void	ft_minus_p(char *str, t_prtf *structprtf, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	structprtf->zero = 0;
-	if (structprtf->precisionfound && !structprtf->precision && !str && structprtf->width)
+	if (structprtf->precisionfound && !structprtf->precision &&
+		!str && structprtf->width)
 	{
 		while (structprtf->width--)
 			ft_putprint(c, structprtf);
@@ -46,12 +59,14 @@ void	ft_minus_p(char *str, t_prtf *structprtf, char c)
 	if (structprtf->precisionfound)
 		ft_width_precision_p(str, structprtf, 'p', c);
 }
+
 void	ft_normal_p(char *str, t_prtf *structprtf, char c)
 {
 	int i;
 
 	i = 0;
-	if (structprtf->precisionfound && !structprtf->precision && !str && structprtf->width)
+	if (structprtf->precisionfound && !structprtf->precision &&
+		!str && structprtf->width)
 	{
 		while (structprtf->width--)
 			ft_putprint(c, structprtf);
@@ -64,16 +79,18 @@ void	ft_normal_p(char *str, t_prtf *structprtf, char c)
 	ft_putstr("0x", structprtf);
 	ft_putstr(str, structprtf);
 }
-void myprintf_p(va_list *list_printf, t_prtf *structprtf)
+
+void	myprintf_p(va_list *list_printf, t_prtf *structprtf)
 {
 	void *address;
 	char *str;
 	char c;
 
 	address = va_arg(*list_printf, void *);
-	str = (address == (void *)-1) ? ft_strdup("ffffffffffffffff") : ft_itoa_base((intptr_t)address, "0123456789abcdef");
+	str = (address == (void *)-1) ? ft_strdup("ffffffffffffffff") :
+		ft_itoa_base((intptr_t)address, "0123456789abcdef");
 	if (!*str && !structprtf->width)
-		return;
+		return ;
 	if (structprtf->precision < 0)
 		structprtf->precision = ft_strlen(str);
 	if (structprtf->zero && !structprtf->precisionfound && !structprtf->minus)

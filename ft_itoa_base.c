@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/25 15:51:14 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/25 15:51:42 by dzementz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int		ft_len(long nb, int len_base)
+int		ft_len(unsigned long nb, int len_base)
 {
 	int count;
 
@@ -13,7 +25,7 @@ int		ft_len(long nb, int len_base)
 	return (count);
 }
 
-char	*ft_divmod(long nb, char *base, int len_base)
+char	*ft_divmod(unsigned long nb, char *base, int len_base)
 {
 	char	*res;
 	int		len;
@@ -22,7 +34,7 @@ char	*ft_divmod(long nb, char *base, int len_base)
 	len = ft_len(nb, len_base);
 	if (!(res = malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	res[len] = 0;
+	res[len] = '\0';
 	len--;
 	mod = 0;
 	while (nb)
@@ -46,7 +58,7 @@ char	*ft_nbzer(char *base)
 	return (res);
 }
 
-char	*ft_itoa_base(long nb, char *base)
+char	*ft_itoa_base(unsigned long nb, char *base)
 {
 	int		len_base;
 
@@ -55,8 +67,5 @@ char	*ft_itoa_base(long nb, char *base)
 		return (ft_nbzer(base));
 	if (base == NULL)
 		return (NULL);
-	if (nb < 0)
-		ft_itoa_base(-nb, base);
 	return (ft_divmod(nb, base, len_base));
 }
-

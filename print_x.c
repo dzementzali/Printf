@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_X.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/25 16:53:34 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/25 21:03:04 by dzementz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-//|========================Hexadecimal x================|
-void	ft_width_precision_x(char *str, t_prtf *structprtf, char wp, char c)
+static void	ft_width_precision_x(char *str, t_prtf *structprtf, char wp, char c)
 {
-	int		len;
+	int	len;
 
 	len = ft_strlen(str);
 	if (structprtf->precision > ft_strlen(str) && structprtf->precisionfound)
@@ -18,12 +29,14 @@ void	ft_width_precision_x(char *str, t_prtf *structprtf, char wp, char c)
 			ft_putprint('0', structprtf);
 	}
 }
-void ft_normal_x(char *str, t_prtf *structprtf, char c, int nb)
+
+static void	ft_normal_x(char *str, t_prtf *structprtf, char c, int nb)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (structprtf->precisionfound && !structprtf->precision && !nb && structprtf->width)
+	if (structprtf->precisionfound && !structprtf->precision &&
+		!nb && structprtf->width)
 	{
 		while (structprtf->width--)
 			ft_putprint(c, structprtf);
@@ -38,18 +51,19 @@ void ft_normal_x(char *str, t_prtf *structprtf, char c, int nb)
 	}
 }
 
-void ft_minus_x(char *str, t_prtf *structprtf, char c, int nb)
+static void	ft_minus_x(char *str, t_prtf *structprtf, char c, int nb)
 {
-	int i;
+	int	i;
 
 	structprtf->zero = 0;
 	c = ' ';
 	i = 0;
-	if (structprtf->precisionfound && !structprtf->precision && !nb && structprtf->width)
+	if (structprtf->precisionfound && !structprtf->precision &&
+		!nb && structprtf->width)
 	{
 		while (structprtf->width--)
 			ft_putprint(c, structprtf);
-		return;
+		return ;
 	}
 	else
 	{
@@ -59,23 +73,27 @@ void ft_minus_x(char *str, t_prtf *structprtf, char c, int nb)
 		ft_width_precision_x(str, structprtf, 'w', c);
 	}
 }
-void myprintf_x(va_list *list_printf, t_prtf *structprtf)
+
+void	myprintf_x(va_list *list_printf, t_prtf *structprtf)
 {
-	unsigned int nb;
-	char *str;
-	char c;
+	unsigned int	nb;
+	char		*str;
+	char		c;
 
 	nb = va_arg(*list_printf, int);
-	if (!nb && structprtf->precisionfound && !structprtf->precision && !structprtf->width)
-		return;
-	str = (structprtf->conv == 'X')? ft_itoa_base(nb, "0123456789ABCDEF") : ft_itoa_base(nb, "0123456789abcdef");
+	if (!nb && structprtf->precisionfound &&
+		!structprtf->precision && !structprtf->width)
+		return ;
+	str = (structprtf->conv == 'X') ? ft_itoa_base(nb, "0123456789ABCDEF") :
+		ft_itoa_base(nb, "0123456789abcdef");
 	c = ' ';
-	if (structprtf->zero && !structprtf->minus && (!structprtf->precisionfound || structprtf->precision < 0))
+	if (structprtf->zero && !structprtf->minus &&
+		(!structprtf->precisionfound || structprtf->precision < 0))
 		c = '0';
 	if (structprtf->precision < 0)
 		structprtf->precision = ft_strlen(str);
 	if (!*str && !structprtf->width)
-		return;
+		return ;
 	if (structprtf->minus && structprtf->width)
 		ft_minus_x(str, structprtf, c, nb);
 	else

@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-#define TEST "[%10.5i]\n"
+#define TEST "[%d]\n"
 int main()
 {
 
@@ -19,8 +19,8 @@ int main()
 	str1 = "world";
 	printf("=======MINE======\n");
 	fflush(stdout);
-	printf("result -> %d\n", ft_printf(TEST, -946));
+	printf("result -> %d\n", ft_printf(TEST, d));
 	printf("=======VRAI======\n");
-	printf("result -> %d\n", printf(TEST, -946));
+	printf("result -> %d\n", printf(TEST, d));
 	return (0);
 }

@@ -1,43 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/25 15:52:11 by dzementz          #+#    #+#             */
+/*   Updated: 2020/01/25 16:04:04 by dzementz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int ft_printf(char *str, ...)
+int		ft_printf(char *str, ...)
 {
-	int i;
-	va_list list_printf;
-	t_prtf structprtf;
-	va_start(list_printf, str);
+	t_prtf	structprtf;
+	va_list	list_printf;
+	int		i;
 
-	structprtf.percent = 0;
 	structprtf.len = 0;
-	i = 0;
-	while (str[i])
+	va_start(list_printf, str);
+	i = -1;
+	while (str[++i])
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && init_struc(&structprtf) && (structprtf.perc = ++i))
 		{
-			i++;
-			init_struc(&structprtf);
-			structprtf.percent = i;
 			if (check_conv(str, &i) == 0)
-			{
-				printf("No flag");
-				return(0);
-			}
+				return (0);
 			else
 			{
 				structprtf.conv = str[i];
 				check_flag(str, &structprtf, list_printf);
 				apply_conv(&structprtf, &list_printf);
 			}
-			i++;
 		}
 		else
-		{
-			write(1, &str[i], 1);
-			structprtf.len++;
-			i++;
-		}
+			ft_putprint(str[i], &structprtf);
 	}
 	va_end(list_printf);
-	//print_struct(structprtf);
 	return (structprtf.len);
 }
