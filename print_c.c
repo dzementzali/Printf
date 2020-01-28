@@ -65,10 +65,10 @@ static void		ft_normal_c(t_prtf *structprtf, char c, char space)
 	ft_putprint(c, structprtf);
 }
 
-void	myprintf_c(va_list *list_printf, t_prtf *structprtf)
+void			myprintf_c(va_list *list_printf, t_prtf *structprtf)
 {
-	char	c;
-	char	space;
+	char		c;
+	char		space;
 
 	c = va_arg(*list_printf, int);
 	if (structprtf->precisionfound && !structprtf->precision && !c &&

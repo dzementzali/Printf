@@ -6,13 +6,13 @@
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 15:51:14 by dzementz          #+#    #+#             */
-/*   Updated: 2020/01/25 15:51:42 by dzementz         ###   ########.fr       */
+/*   Updated: 2020/01/27 10:49:03 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_len(unsigned long nb, int len_base)
+static int		ft_len(unsigned long nb, int len_base)
 {
 	int count;
 
@@ -25,7 +25,7 @@ int		ft_len(unsigned long nb, int len_base)
 	return (count);
 }
 
-char	*ft_divmod(unsigned long nb, char *base, int len_base)
+static char		*ft_divmod(unsigned long nb, char *base, int len_base)
 {
 	char	*res;
 	int		len;
@@ -47,7 +47,7 @@ char	*ft_divmod(unsigned long nb, char *base, int len_base)
 	return (res);
 }
 
-char	*ft_nbzer(char *base)
+static char		*ft_nbzer(char *base)
 {
 	char *res;
 
@@ -58,7 +58,7 @@ char	*ft_nbzer(char *base)
 	return (res);
 }
 
-char	*ft_itoa_base(unsigned long nb, char *base)
+char			*ft_itoa_base(unsigned long nb, char *base)
 {
 	int		len_base;
 

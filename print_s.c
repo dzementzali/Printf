@@ -6,13 +6,13 @@
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 21:25:02 by dzementz          #+#    #+#             */
-/*   Updated: 2020/01/25 21:25:03 by dzementz         ###   ########.fr       */
+/*   Updated: 2020/01/27 10:47:46 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_normal_s(char *str, t_prtf *structprtf, char c)
+static void	ft_normal_s(char *str, t_prtf *structprtf, char c)
 {
 	int i;
 	int len;
@@ -38,7 +38,7 @@ void	ft_normal_s(char *str, t_prtf *structprtf, char c)
 	}
 }
 
-void	ft_minus_s(char *str, t_prtf *structprtf, char c)
+static void	ft_minus_s(char *str, t_prtf *structprtf, char c)
 {
 	int i;
 	int len;
@@ -65,7 +65,7 @@ void	ft_minus_s(char *str, t_prtf *structprtf, char c)
 		ft_putprint(c, structprtf);
 }
 
-void	ft_nullstring(t_prtf *structprtf, char c)
+static void	ft_nullstring(t_prtf *structprtf, char c)
 {
 	char	*nul;
 	int		len;
@@ -84,7 +84,7 @@ void	ft_nullstring(t_prtf *structprtf, char c)
 	free(nul);
 }
 
-void	myprintf_s(va_list *list_printf, t_prtf *structprtf)
+void		myprintf_s(va_list *list_printf, t_prtf *structprtf)
 {
 	char *str;
 	char c;

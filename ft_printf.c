@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 int		ft_printf(char *str, ...)
 {
@@ -37,6 +38,7 @@ int		ft_printf(char *str, ...)
 		else
 			ft_putprint(str[i], &structprtf);
 	}
+	//printf("conv -> %d\n", structprtf.width);
 	va_end(list_printf);
 	return (structprtf.len);
 }

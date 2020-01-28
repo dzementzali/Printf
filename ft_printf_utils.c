@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	init_struc(t_prtf *structure)
+int		init_struc(t_prtf *structure)
 {
 	structure->conv = 0;
 	structure->star = 0;
@@ -58,7 +58,7 @@ int		recup_number(char *str, int *i, t_prtf *structprtf)
 
 void	check_flag(char *str, t_prtf *structprtf, va_list list_printf)
 {
-	int i;
+	int	i;
 
 	i = structprtf->perc;
 	while (str[i] != structprtf->conv)

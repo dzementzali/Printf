@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		ft_count(long nb)
+int			ft_count(long nb)
 {
 	int	count;
 

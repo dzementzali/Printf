@@ -6,15 +6,16 @@
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:53:34 by dzementz          #+#    #+#             */
-/*   Updated: 2020/01/25 21:03:04 by dzementz         ###   ########.fr       */
+/*   Updated: 2020/01/27 10:42:45 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_width_precision_x(char *str, t_prtf *structprtf, char wp, char c)
+static void			ft_width_precision_x(char *str, t_prtf *structprtf,
+					char wp, char c)
 {
-	int	len;
+	int				len;
 
 	len = ft_strlen(str);
 	if (structprtf->precision > ft_strlen(str) && structprtf->precisionfound)
@@ -30,9 +31,9 @@ static void	ft_width_precision_x(char *str, t_prtf *structprtf, char wp, char c)
 	}
 }
 
-static void	ft_normal_x(char *str, t_prtf *structprtf, char c, int nb)
+static void			ft_normal_x(char *str, t_prtf *structprtf, char c, int nb)
 {
-	int	i;
+	int				i;
 
 	i = 0;
 	if (structprtf->precisionfound && !structprtf->precision &&
@@ -51,9 +52,9 @@ static void	ft_normal_x(char *str, t_prtf *structprtf, char c, int nb)
 	}
 }
 
-static void	ft_minus_x(char *str, t_prtf *structprtf, char c, int nb)
+static void			ft_minus_x(char *str, t_prtf *structprtf, char c, int nb)
 {
-	int	i;
+	int				i;
 
 	structprtf->zero = 0;
 	c = ' ';
@@ -74,11 +75,11 @@ static void	ft_minus_x(char *str, t_prtf *structprtf, char c, int nb)
 	}
 }
 
-void	myprintf_x(va_list *list_printf, t_prtf *structprtf)
+void				myprintf_x(va_list *list_printf, t_prtf *structprtf)
 {
 	unsigned int	nb;
-	char		*str;
-	char		c;
+	char			*str;
+	char			c;
 
 	nb = va_arg(*list_printf, int);
 	if (!nb && structprtf->precisionfound &&

@@ -2,11 +2,8 @@ NAME = libftprintf.a
 
 FLAGS = -Wall -Wextra -Werror -g3
 
-SRCS =  ft_itoa_base.c \
+SRCS =	ft_itoa_base.c \
 		ft_printf_utils.c \
-		ft_check_flag_star.c \
-		ft_check_flag_precision.c \
-		ft_check_flag_mod.c \
 		ft_printf.c \
 		print_di.c \
 		print_u.c \
@@ -25,6 +22,9 @@ SRCS =  ft_itoa_base.c \
 		ft_calloc.c \
 		ft_bzero.c \
 		ft_memset.c \
+		ft_check_flag_mod.c \
+		ft_check_flag_precision.c \
+		ft_check_flag_star.c \
 
 
 all: $(NAME)
@@ -37,11 +37,7 @@ $(NAME):
 
 clean:
 	rm -rf $(SRCS:.c=.o)
-	make clean -C ../libft 
-
-clean_b:
-	rm -rf $(BONUS:.c=.o)
-
-fclean: clean clean_b
+	
+fclean: clean
 	rm -rf $(NAME)
 re: fclean all

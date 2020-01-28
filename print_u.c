@@ -6,15 +6,15 @@
 /*   By: dzementz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 21:25:24 by dzementz          #+#    #+#             */
-/*   Updated: 2020/01/25 21:29:39 by dzementz         ###   ########.fr       */
+/*   Updated: 2020/01/27 10:46:53 by dzementz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_count_unsigned(unsigned int nb)
+static int		ft_count_unsigned(unsigned int nb)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (nb < 0)
@@ -29,8 +29,8 @@ int	ft_count_unsigned(unsigned int nb)
 	return (count);
 }
 
-void	ft_width_precision_u(unsigned int nb, t_prtf *structprtf,
-		char wp, char c)
+static void		ft_width_precision_u(unsigned int nb, t_prtf *structprtf,
+				char wp, char c)
 {
 	int		len;
 
@@ -49,7 +49,7 @@ void	ft_width_precision_u(unsigned int nb, t_prtf *structprtf,
 	}
 }
 
-void	ft_minus_u(unsigned int nb, t_prtf *structprtf, char c)
+static void		ft_minus_u(unsigned int nb, t_prtf *structprtf, char c)
 {
 	structprtf->zero = 0;
 	if (structprtf->precisionfound &&
@@ -65,7 +65,7 @@ void	ft_minus_u(unsigned int nb, t_prtf *structprtf, char c)
 	ft_width_precision_u(nb, structprtf, 'w', c);
 }
 
-void	ft_normal_u(unsigned int nb, t_prtf *structprtf, char c)
+static void		ft_normal_u(unsigned int nb, t_prtf *structprtf, char c)
 {
 	if (structprtf->precisionfound &&
 	!structprtf->precision && !nb && structprtf->width)
@@ -80,10 +80,10 @@ void	ft_normal_u(unsigned int nb, t_prtf *structprtf, char c)
 	ft_putnbr_unsigned(nb, structprtf);
 }
 
-void	myprintf_u(va_list *list_printf, t_prtf *structprtf)
+void			myprintf_u(va_list *list_printf, t_prtf *structprtf)
 {
-	unsigned int	nb;
-	char		c;
+	unsigned int		nb;
+	char				c;
 
 	nb = va_arg(*list_printf, unsigned int);
 	if (structprtf->precisionfound &&
